@@ -30,10 +30,11 @@ import SecurityRadar from './components/SecurityRadar';
 import BudgetTimeline from './components/BudgetTimeline';
 import DatabaseSchemaViewer from './components/DatabaseSchemaViewer';
 import InteractiveNSWPortal from './components/InteractiveNSWPortal';
+import AIPredictiveAnalytics from './components/AIPredictiveAnalytics';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
-  const [activeTab, setActiveTab] = useState<'overview' | 'portal' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('portal');
+  const [activeTab, setActiveTab] = useState<'overview' | 'portal' | 'ai_platform' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('portal');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[lang];
@@ -193,7 +194,7 @@ export default function App() {
         <div className="lg:col-span-9 space-y-6 flex flex-col justify-start">
           
           {/* Main Workspace Navigation Options bar */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-1.5 flex flex-wrap md:flex-nowrap gap-1">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-1.5 flex flex-wrap gap-1">
             <button
               onClick={() => setActiveTab('overview')}
               className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
@@ -204,11 +205,19 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveTab('portal')}
-              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer min-w-max ${
                 activeTab === 'portal' ? 'bg-emerald-600 text-slate-950 shadow-md animate-pulse' : 'text-slate-200 hover:text-white hover:bg-slate-800/40 bg-emerald-950/20 border border-emerald-400/20 shadow'
               }`}
             >
               ✨ {t.tabPortal}
+            </button>
+            <button
+              onClick={() => setActiveTab('ai_platform')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer min-w-max ${
+                activeTab === 'ai_platform' ? 'bg-emerald-600 text-slate-950 shadow-md' : 'text-slate-300 hover:text-white hover:bg-slate-800/40 bg-emerald-950/10 border border-emerald-500/10'
+              }`}
+            >
+              🧠 {t.tabAI}
             </button>
             <button
               onClick={() => setActiveTab('archi')}
@@ -392,6 +401,7 @@ export default function App() {
             )}
 
             {activeTab === 'portal' && <InteractiveNSWPortal lang={lang} />}
+            {activeTab === 'ai_platform' && <AIPredictiveAnalytics lang={lang} />}
             {activeTab === 'archi' && <ArchitectureDiagram lang={lang} />}
             {activeTab === 'services' && <MicroservicesList lang={lang} />}
             {activeTab === 'flows' && <DataFlowSimulator lang={lang} />}

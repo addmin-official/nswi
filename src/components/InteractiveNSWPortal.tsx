@@ -435,25 +435,63 @@ export default function InteractiveNSWPortal({ lang }: InteractiveNSWPortalProps
     }
   ]);
 
-  // Wizard active sub-step for submitting declarations
-  const [wizardStep, setWizardStep] = useState<number>(0);
-  
-  // Submit Wizard Form Holder
-  const [newDec, setNewDec] = useState({
-    origin: "TR",
-    destination: "Erbil Gateway Node",
-    type: "IMPORT" as 'IMPORT' | 'EXPORT',
-    description: "Agricultural Fresh Potato Cargo for Surchi Cold Storage",
-    hsCode: "0701.90 (Potatoes, Fresh or Chilled, Food Sector)",
-    quantityValueUsd: 45000,
-    calculatedDuty: 450000, // 1% tax standard
-    ocrFile: "" as string,
-    isOcrScanning: false,
-    isOcrDone: false,
-    passphrasePin: "",
-    isSigned: false,
-    isPaid: false
+  // Wizard active sub-step for submitting declarations loaded from localStorage if present
+  const [wizardStep, setWizardStep] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('nsw_wizard_step');
+      if (saved !== null) {
+        const parsed = parseInt(saved, 10);
+        if (!isNaN(parsed)) return parsed;
+      }
+    } catch (e) {
+      console.error("Error reading nsw_wizard_step from localStorage:", e);
+    }
+    return 0;
   });
+  
+  // Submit Wizard Form Holder with initial states restored from localStorage if present
+  const [newDec, setNewDec] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nsw_wizard_new_dec');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error("Error reading nsw_wizard_new_dec from localStorage:", e);
+    }
+    return {
+      origin: "TR",
+      destination: "Erbil Gateway Node",
+      type: "IMPORT" as 'IMPORT' | 'EXPORT',
+      description: "Agricultural Fresh Potato Cargo for Surchi Cold Storage",
+      hsCode: "0701.90 (Potatoes, Fresh or Chilled, Food Sector)",
+      quantityValueUsd: 45000,
+      calculatedDuty: 450000, // 1% tax standard
+      ocrFile: "" as string,
+      isOcrScanning: false,
+      isOcrDone: false,
+      passphrasePin: "",
+      isSigned: false,
+      isPaid: false
+    };
+  });
+
+  // Automatically save wizard step and form content changes to local storage
+  useEffect(() => {
+    try {
+      localStorage.setItem('nsw_wizard_step', wizardStep.toString());
+    } catch (e) {
+      console.error("Error writing nsw_wizard_step to localStorage:", e);
+    }
+  }, [wizardStep]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nsw_wizard_new_dec', JSON.stringify(newDec));
+    } catch (e) {
+      console.error("Error writing nsw_wizard_new_dec to localStorage:", e);
+    }
+  }, [newDec]);
 
   // Selected Declaration for the Live Tracker or Officer Desk
   const [selectedDecId, setSelectedDecId] = useState<string>("DEC-2026-9204");
