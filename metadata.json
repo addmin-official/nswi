@@ -1,0 +1,6 @@
+{
+  "name": "Iraq NSW Architecture Portal",
+  "description": "Interactive technical architecture dashboard and solutions manual for Iraq's National Single Window (NSW) for Trade, built on GCP Sovereign Cloud with ASYCUDA integration, Zero-Trust security, and multi-region resilience.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
