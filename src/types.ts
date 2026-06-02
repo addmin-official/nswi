@@ -20,6 +20,7 @@ export interface TranslationSet {
   tabApiDesign: string;
   tabSecurity: string;
   tabBudgetTimeline: string;
+  tabDatabase: string;
   
   // Cards & Info
   btnCopyMermaid: string;

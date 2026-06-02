@@ -28,10 +28,11 @@ import ApiDesignPortal from './components/ApiDesignPortal';
 import MicroservicesList from './components/MicroservicesList';
 import SecurityRadar from './components/SecurityRadar';
 import BudgetTimeline from './components/BudgetTimeline';
+import DatabaseSchemaViewer from './components/DatabaseSchemaViewer';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
-  const [activeTab, setActiveTab] = useState<'overview' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[lang];
@@ -233,6 +234,14 @@ export default function App() {
               {t.tabApiDesign}
             </button>
             <button
+              onClick={() => setActiveTab('database')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
+                activeTab === 'database' ? 'bg-emerald-600 text-slate-950 shadow-md' : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
+              }`}
+            >
+              {t.tabDatabase}
+            </button>
+            <button
               onClick={() => setActiveTab('secu')}
               className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
                 activeTab === 'secu' ? 'bg-emerald-600 text-slate-950 shadow-md' : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
@@ -377,6 +386,7 @@ export default function App() {
             {activeTab === 'services' && <MicroservicesList lang={lang} />}
             {activeTab === 'flows' && <DataFlowSimulator lang={lang} />}
             {activeTab === 'apis' && <ApiDesignPortal lang={lang} />}
+            {activeTab === 'database' && <DatabaseSchemaViewer lang={lang} />}
             {activeTab === 'secu' && <SecurityRadar lang={lang} />}
             {activeTab === 'roadmap' && <BudgetTimeline lang={lang} />}
           </div>
