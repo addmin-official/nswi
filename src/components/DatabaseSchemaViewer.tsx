@@ -57,7 +57,7 @@ const DATABASE_TABLES: TableModel[] = [
     name: 'nsw_ministries',
     descriptionEn: 'Stores registered Federal Ministries & Port Authorities as tenant partitions, supporting isolated multi-tenancy.',
     descriptionAr: 'يخزن الوزارات الاتحادية وسلطات الموانئ المسجلة كأقسام مستأجرين، مما يدعم تعدد المستأجرين المعزول.',
-    descriptionKu: 'وەزارەتە فیدراڵییەکان و دەسەڵاتەکانی بەندەر تۆمار دەکات، کە پشتگیری لە جیاکاری فرە-تەنانەت دەکات.',
+    descriptionKu: 'وەزارەتەکانی فیدراڵی و دەسەڵاتدارانی بەندەرەکان تۆمار دەکات، کە پشتگیری لە جیاکاری فرە-تەنانەت دەکات.',
     type: 'SQL (Spanner/PG)',
     ddl: `CREATE TABLE nsw_ministries (
     ministry_id VARCHAR(36) PRIMARY KEY,
@@ -83,7 +83,7 @@ const DATABASE_TABLES: TableModel[] = [
     name: 'nsw_users',
     descriptionEn: 'Manages user accounts, including custom ministry clearance officers and clearing agents, with structural PII encryption.',
     descriptionAr: 'يدير حسابات المستخدمين، بما في ذلك ضباط التدقيق بالوزارات والمخلصين الجمركيين، مع تشفير البيانات الشخصية المهمة (PII).',
-    descriptionKu: 'هەژماری بەکارهێنەران بەڕێوەدەبات، بە فەرمانبەرانی وەزارەت و بریکارەکانی گومرگەوە، لەگەڵ تشفێری زانیاری کەسی.',
+    descriptionKu: 'هەژماری بەکارهێنەران بەڕێوەدەبات، بە فەرمانبەرانی وەزارەت و بریکارەکانی گومرگەوە، لەگەڵ کۆدکردنی زانیاری کەسی.',
     type: 'SQL (Spanner/PG)',
     ddl: `CREATE TABLE nsw_users (
     user_id VARCHAR(36) PRIMARY KEY,
@@ -98,7 +98,7 @@ const DATABASE_TABLES: TableModel[] = [
     columns: [
       { name: 'user_id', type: 'VARCHAR(36)', key: 'PK', arabicName: 'معرّف المستخدم', kurdishName: 'ناسنامەی بەکارهێنەر', pii: false, descEn: 'Unique primary UUID.', descAr: 'رمز معرّف المستخدم الفريد.', descKu: 'ناسنامەی بێهاوتای بەکارهێنەر.' },
       { name: 'ministry_id', type: 'VARCHAR(36)', key: 'FK', ref: 'nsw_ministries', arabicName: 'معرّف الوزارة', kurdishName: 'ناسنامەی وەزارەت', pii: false, descEn: 'Tenant reference points.', descAr: 'مفتاح خارجي للربط مع الوزارة.', descKu: 'ناسنامەی وەزارەتی سەر بەم بەکارهێنەرە.' },
-      { name: 'email_encrypted', type: 'BYTEA', key: 'NONE', arabicName: 'البريد الإلكتروني المشفر', kurdishName: 'ئیمەیڵی تەنککراو', pii: true, descEn: 'Encrypted email string (AES-256).', descAr: 'البريد الإلكتروني مشفر لحماية الخصوصية (AES-256).', descKu: 'ئیمەیڵی بەکارهێنەر تەنکراوە بۆ پاراستنی کەسی.' },
+      { name: 'email_encrypted', type: 'BYTEA', key: 'NONE', arabicName: 'البريد الإلكتروني المشفر', kurdishName: 'ئیمەیڵی تەنککراو', pii: true, descEn: 'Encrypted email string (AES-256).', descAr: 'البريد الإلكتروني مشفر لحماية الخصوصية (AES-256).', descKu: 'ئیمەیڵی بەکارهێنەر کۆد کراوە بۆ پاراستنی کەسی.' },
       { name: 'full_name_encrypted', type: 'BYTEA', key: 'NONE', arabicName: 'الاسم الثلاثي المشفر', kurdishName: 'ناوی سێ کانی تەنککراو', pii: true, descEn: 'Encrypted full name (AES-256).', descAr: 'الاسم الكامل للمستخدم مشفر بالكامل لنظام الأمن والسيادة.', descKu: 'ناوی تەواوی بەکارهێنەر کە بە تەواوی پارێزراوە.' },
       { name: 'role', type: 'VARCHAR(30)', key: 'NONE', arabicName: 'الصلاحية والوظيفة', kurdishName: 'ڕۆڵی بەکارهێنەر', pii: false, descEn: 'Permission string.', descAr: 'صلاحيات المستخدم الوظيفية بالنافذة.', descKu: 'دەسەڵاتی کارکردنی فەرمانبەر لە ناو سیستمەکەدا.' }
     ]

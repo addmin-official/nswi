@@ -18,7 +18,7 @@ export const kurdishTranslations = {
 
     // === DASHBOARD ===
     dashboard: "داشبۆرد",
-    overview: "پێشەکی گشتی",
+    overview: "تێڕوانینێکی گشتی",
     statistics: "ئامارەکان",
     recentActivity: "چالاکییەکانی ئەم دواییانە",
     quickActions: "کردارە خێراکان",
@@ -26,12 +26,12 @@ export const kurdishTranslations = {
     settings: "ڕێکخستنەکان",
     profile: "پڕۆفایل",
     help: "یارمەتی",
-    support: "پشتیوانی تەنۆکەیی",
+    support: "پشتیوانی ",
 
     // === CUSTOMS DECLARATION ===
-    submitDeclaration: "ناردنی ڕاگەیاندنامە",
-    declarationNumber: "ژمارەی ڕاگەیاندنامە",
-    declarationType: "جۆری ڕاگەیاندنامە",
+    submitDeclaration: "پێشکەشکردنی بەیاننامە",
+    declarationNumber: "ژمارەی بەیاننامەیە",
+    declarationType: "جۆری بەیاننامەیە",
     import: "هاوردەکردن",
     export: "هەناردەکردن",
     traderId: "ناسنامەی بازرگان",
@@ -44,7 +44,7 @@ export const kurdishTranslations = {
     weight: "کێش (کیلۆگرام)",
     submit: "ناردن",
     saveDraft: "پاشەکەوتکردن وەک ڕەشنووس",
-    cancel: "هەڵوەşاندنەوە",
+    cancel: "هەڵوەشاندنەوە",
     edit: "دەستکاری",
     delete: "سڕینەوە",
     viewDetails: "بینینی وردەکارییەکان",
@@ -59,7 +59,7 @@ export const kurdishTranslations = {
     documents: "بەڵگەنامەکان",
     uploadDocument: "بارکردنی بەڵگەنامە",
     commercialInvoice: "فاتورەی بازرگانی",
-    packingList: "لیستی ئاخنینی کاڵا (Packing List)",
+    packingList: "لیستی پاککردنەوە(Packing List)",
     certificateOfOrigin: "بڕوانامەی ڕەسەنایەتی وڵات",
     billOfLading: "پۆڵیسەی بارکردن (Bill of Lading)",
     healthCertificate: "بڕوانامەی تەندروستی",
