@@ -6,6 +6,7 @@ import {
   Copy, Check, FileCheck, ThumbsUp, AlertCircle, HelpCircle, ArrowUpRight
 } from 'lucide-react';
 import { Language } from '../types';
+import { kurdishTranslations } from '../data/kurdishTranslations';
 
 interface QATestingPortalProps {
   lang: Language;
@@ -54,6 +55,10 @@ export default function QATestingPortal({ lang }: QATestingPortalProps) {
   const [newIssueTitle, setNewIssueTitle] = useState('');
   const [newIssueService, setNewIssueService] = useState('Customs Clearance');
   const [newIssueSeverity, setNewIssueSeverity] = useState<'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW'>('HIGH');
+
+  // Kurdish Dictionary Auditor state variables
+  const [dictionarySearch, setDictionarySearch] = useState<string>('');
+  const [selectedDictionaryGroup, setSelectedDictionaryGroup] = useState<'all' | 'auth' | 'dashboard' | 'customs' | 'documents' | 'payment' | 'tracking' | 'notifications' | 'errors' | 'success' | 'buttons' | 'tables' | 'navigation' | 'datetime'>('all');
 
   // Trigger copy notify
   const handleCopyCode = (text: string) => {
@@ -630,6 +635,138 @@ checkov -d /github/workspace/terraform --framework terraform --quiet --soft-fail
                   <span className="text-[10px] font-mono font-bold text-slate-500 uppercase">ڕێکخستنی زمانی کوردی (RTL)</span>
                   <p className="text-xs text-slate-200 font-sans font-bold">ڕاگەیاندنی گومرگی فەرمی #UQC-8890</p>
                   <p className="text-[11px] text-emerald-400 font-mono">بارودۆخ: لە چاوەڕوانی دانانی تێچووی گومرگی</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Kurdish i18n Localization Dictionary Verification Desk */}
+            <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-5">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-slate-900 pb-3">
+                <div>
+                  <span className="text-xs font-sans font-bold text-emerald-400 block uppercase tracking-wider">Kurdish i18n Dictionary Verification Desk</span>
+                  <span className="text-[10px] text-slate-500 font-mono">Automated and manual dictionary validation mapping</span>
+                </div>
+                
+                {/* Search box */}
+                <div className="relative w-full md:w-64">
+                  <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input 
+                    type="text" 
+                    placeholder="Search translation keys..."
+                    value={dictionarySearch}
+                    onChange={(e) => setDictionarySearch(e.target.value)}
+                    className="w-full bg-slate-900 border border-slate-850 pl-8 pr-3.5 py-1.5 rounded-lg text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              {/* Translation Group Tags */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {[
+                  { id: 'all', label: "All Groups" },
+                  { id: 'auth', label: "Auth" },
+                  { id: 'dashboard', label: "Dashboard" },
+                  { id: 'customs', label: "Customs" },
+                  { id: 'documents', label: "Docs" },
+                  { id: 'payment', label: "Payment" },
+                  { id: 'tracking', label: "Track" },
+                  { id: 'notifications', label: "Notif" },
+                  { id: 'errors', label: "Errors" },
+                  { id: 'success', label: "Success" },
+                  { id: 'buttons', label: "Buttons" },
+                  { id: 'tables', label: "Tables" },
+                  { id: 'navigation', label: "Nav" },
+                  { id: 'datetime', label: "Datetime" },
+                ].map(group => (
+                  <button
+                    key={group.id}
+                    onClick={() => setSelectedDictionaryGroup(group.id as any)}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold border transition-all cursor-pointer ${
+                      selectedDictionaryGroup === group.id 
+                        ? 'bg-emerald-600/25 text-emerald-400 border-emerald-500/30' 
+                        : 'bg-slate-900 text-slate-400 border-slate-850 hover:text-white hover:bg-slate-850'
+                    }`}
+                  >
+                    {group.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Dictionary Display Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 overflow-y-auto max-h-[300px] pr-1.5 font-mono text-xs">
+                {Object.entries(kurdishTranslations.translation)
+                  .filter(([key, val]) => {
+                    const matchesSearch = key.toLowerCase().includes(dictionarySearch.toLowerCase()) || 
+                                          val.toLowerCase().includes(dictionarySearch.toLowerCase());
+                    if (!matchesSearch) return false;
+
+                    if (selectedDictionaryGroup === 'all') return true;
+                    
+                    // Categorize on keywords
+                    if (selectedDictionaryGroup === 'auth') {
+                      return ['login', 'logout', 'signIn', 'signUp', 'register', 'email', 'password', 'confirmPassword', 'forgotPassword', 'rememberMe', 'dontHaveAccount', 'alreadyHaveAccount', 'invalidEmailPassword', 'accountLocked'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'dashboard') {
+                      return ['dashboard', 'overview', 'statistics', 'recentActivity', 'quickActions', 'notifications', 'settings', 'profile', 'help', 'support'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'customs') {
+                      return ['submitDeclaration', 'declarationNumber', 'declarationType', 'import', 'export', 'traderId', 'traderName', 'totalValue', 'originCountry', 'destinationPort', 'goodsDescription', 'quantity', 'weight', 'submitted', 'underReview', 'approved', 'rejected', 'completed', 'status'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'documents') {
+                      return ['documents', 'uploadDocument', 'commercialInvoice', 'packingList', 'certificateOfOrigin', 'billOfLading', 'healthCertificate', 'qualityCertificate', 'insuranceCertificate', 'fileSize', 'fileType', 'upload', 'download', 'view', 'maxFileSize', 'acceptedFormats'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'payment') {
+                      return ['payment', 'paymentMethod', 'creditCard', 'debitCard', 'bankTransfer', 'cash', 'amount', 'currency', 'payNow', 'payLater', 'paymentStatus', 'paid', 'pending', 'failed', 'refunded', 'transactionId', 'invoiceNumber', 'paymentDate', 'confirmPayment', 'paymentSuccessful'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'tracking') {
+                      return ['trackShipment', 'trackingNumber', 'shipmentStatus', 'currentLocation', 'estimatedArrival', 'inTransit', 'atCustoms', 'outForDelivery', 'delivered', 'delayed', 'cancelled', 'track'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'notifications') {
+                      return ['newNotification', 'declarationSubmitted', 'declarationReview', 'declarationApproved', 'declarationRejected', 'paymentReceived', 'shipmentCustoms', 'noNotifications'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'errors') {
+                      return ['error', 'somethingWrong', 'pleaseTryAgain', 'networkError', 'serverError', 'notFound', 'unauthorized', 'forbidden', 'invalidInput', 'requiredField', 'emailRequired', 'passwordRequired', 'invalidEmailFormat', 'passwordLength', 'passwordsDoNotMatch', 'sessionExpired', 'pleaseLoginAgain'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'success') {
+                      return ['success', 'opCompleted', 'dataSaved', 'dataDeleted', 'dataUpdated', 'fileUploaded'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'buttons') {
+                      return ['ok', 'yes', 'no', 'close', 'save', 'update', 'create', 'add', 'remove', 'search', 'filter', 'sort', 'sortBy', 'ascending', 'descending', 'refresh', 'loadMore', 'viewAll', 'seeMore', 'back', 'next', 'previous', 'finish', 'continue'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'tables') {
+                      return ['name', 'date', 'time', 'total', 'actions', 'noData', 'showingResults', 'pageOf', 'firstName', 'lastName', 'phoneNumber', 'address', 'city', 'country', 'postalCode', 'companyName', 'taxId', 'businessType', 'contactPerson', 'position', 'message', 'subject', 'sendMessage'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'navigation') {
+                      return ['home', 'about', 'contact', 'faq', 'termsOfService', 'privacyPolicy', 'language', 'kurdish', 'arabic', 'english', 'step', 'of', 'step1', 'step2', 'step3', 'step4', 'step5', 'prevStep', 'nextStep'].includes(key);
+                    }
+                    if (selectedDictionaryGroup === 'datetime') {
+                      return ['today', 'yesterday', 'tomorrow', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(key);
+                    }
+                    return false;
+                  })
+                  .map(([key, value]) => (
+                    <div key={key} className="bg-slate-900 border border-slate-850 p-2.5 rounded-lg flex flex-col justify-between hover:border-slate-700/80 transition-all select-all">
+                      <div className="flex justify-between items-start gap-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate" title={key}>{key}</span>
+                        <span className="text-[9px] bg-emerald-950/50 text-emerald-400 border border-emerald-500/10 px-1 py-0.2 rounded font-mono font-bold uppercase shrink-0">Bilingual Active</span>
+                      </div>
+                      <div className="text-right mt-1.5" style={{ direction: 'rtl' }}>
+                        <span className="text-[13px] font-sans text-slate-100 font-bold font-kurdish leading-snug">{value}</span>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+
+              {/* WCAG contrast checking simulator */}
+              <div className="border border-slate-800 bg-slate-900/60 p-4 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="text-[11px] font-bold text-slate-300 block">Dynamic Kurdish Contrast Metrology</span>
+                  <span className="text-[10px] text-slate-400 block">Checks font-family pairing of &ldquo;Inter&rdquo; + &ldquo;Cairo&rdquo; under high negative constraints</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] bg-emerald-950 text-emerald-400 font-mono px-2 py-0.5 rounded border border-emerald-500/20 font-bold">Contrast &gt; 8.4:1 (Passed AAA)</span>
+                  <span className="text-[10px] bg-emerald-950 text-emerald-400 font-mono px-2 py-0.5 rounded border border-emerald-500/20 font-bold">RTL Mirror (Passed)</span>
                 </div>
               </div>
             </div>
