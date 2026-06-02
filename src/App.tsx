@@ -31,10 +31,13 @@ import BudgetTimeline from './components/BudgetTimeline';
 import DatabaseSchemaViewer from './components/DatabaseSchemaViewer';
 import InteractiveNSWPortal from './components/InteractiveNSWPortal';
 import AIPredictiveAnalytics from './components/AIPredictiveAnalytics';
+import CloudDevOpsIaC from './components/CloudDevOpsIaC';
+import SovereignRepoWorkspace from './components/SovereignRepoWorkspace';
+import QATestingPortal from './components/QATestingPortal';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
-  const [activeTab, setActiveTab] = useState<'overview' | 'portal' | 'ai_platform' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('portal');
+  const [activeTab, setActiveTab] = useState<'overview' | 'portal' | 'ai_platform' | 'workspace' | 'qa' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database' | 'devops'>('portal');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[lang];
@@ -220,6 +223,30 @@ export default function App() {
               🧠 {t.tabAI}
             </button>
             <button
+              onClick={() => setActiveTab('devops')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer min-w-max ${
+                activeTab === 'devops' ? 'bg-emerald-600 text-slate-950 shadow-md' : 'text-slate-300 hover:text-white hover:bg-slate-800/40 bg-emerald-950/10 border border-emerald-500/10'
+              }`}
+            >
+              ☁️ {t.tabDevOps}
+            </button>
+            <button
+              onClick={() => setActiveTab('workspace')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer min-w-max ${
+                activeTab === 'workspace' ? 'bg-emerald-600 text-slate-950 shadow-md animate-pulse' : 'text-slate-300 hover:text-white hover:bg-slate-800/40 bg-emerald-950/10 border border-emerald-500/10'
+              }`}
+            >
+              📁 {t.tabWorkspace}
+            </button>
+            <button
+              onClick={() => setActiveTab('qa')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer min-w-max ${
+                activeTab === 'qa' ? 'bg-emerald-600 text-slate-950 shadow-md animate-pulse' : 'text-slate-300 hover:text-white hover:bg-slate-800/40 bg-emerald-950/10 border border-emerald-500/10'
+              }`}
+            >
+              🧪 {t.tabQA}
+            </button>
+            <button
               onClick={() => setActiveTab('archi')}
               className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
                 activeTab === 'archi' ? 'bg-emerald-600 text-slate-950 shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
@@ -402,6 +429,9 @@ export default function App() {
 
             {activeTab === 'portal' && <InteractiveNSWPortal lang={lang} />}
             {activeTab === 'ai_platform' && <AIPredictiveAnalytics lang={lang} />}
+            {activeTab === 'devops' && <CloudDevOpsIaC lang={lang} />}
+            {activeTab === 'workspace' && <SovereignRepoWorkspace lang={lang} />}
+            {activeTab === 'qa' && <QATestingPortal lang={lang} />}
             {activeTab === 'archi' && <ArchitectureDiagram lang={lang} />}
             {activeTab === 'services' && <MicroservicesList lang={lang} />}
             {activeTab === 'flows' && <DataFlowSimulator lang={lang} />}

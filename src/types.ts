@@ -23,6 +23,9 @@ export interface TranslationSet {
   tabSecurity: string;
   tabBudgetTimeline: string;
   tabDatabase: string;
+  tabDevOps: string;
+  tabWorkspace: string;
+  tabQA: string;
   
   // Cards & Info
   btnCopyMermaid: string;
