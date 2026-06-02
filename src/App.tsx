@@ -29,10 +29,11 @@ import MicroservicesList from './components/MicroservicesList';
 import SecurityRadar from './components/SecurityRadar';
 import BudgetTimeline from './components/BudgetTimeline';
 import DatabaseSchemaViewer from './components/DatabaseSchemaViewer';
+import InteractiveNSWPortal from './components/InteractiveNSWPortal';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
-  const [activeTab, setActiveTab] = useState<'overview' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'portal' | 'archi' | 'services' | 'flows' | 'apis' | 'secu' | 'roadmap' | 'database'>('portal');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[lang];
@@ -200,6 +201,14 @@ export default function App() {
               }`}
             >
               {t.tabOverview}
+            </button>
+            <button
+              onClick={() => setActiveTab('portal')}
+              className={`flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
+                activeTab === 'portal' ? 'bg-emerald-600 text-slate-950 shadow-md animate-pulse' : 'text-slate-200 hover:text-white hover:bg-slate-800/40 bg-emerald-950/20 border border-emerald-400/20 shadow'
+              }`}
+            >
+              ✨ {t.tabPortal}
             </button>
             <button
               onClick={() => setActiveTab('archi')}
@@ -382,6 +391,7 @@ export default function App() {
               </div>
             )}
 
+            {activeTab === 'portal' && <InteractiveNSWPortal lang={lang} />}
             {activeTab === 'archi' && <ArchitectureDiagram lang={lang} />}
             {activeTab === 'services' && <MicroservicesList lang={lang} />}
             {activeTab === 'flows' && <DataFlowSimulator lang={lang} />}

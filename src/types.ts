@@ -14,6 +14,7 @@ export interface TranslationSet {
   
   // Navigation Tabs
   tabOverview: string;
+  tabPortal: string;
   tabArchitecture: string;
   tabMicroservices: string;
   tabDataFlow: string;
